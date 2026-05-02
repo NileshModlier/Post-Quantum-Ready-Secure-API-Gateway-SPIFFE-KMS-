@@ -1,0 +1,7 @@
+
+resources:
+- ../../base
+
+images:
+- name: ghcr.io/your-org/quantum-gateway
+  newTag: PLACEHOLDER

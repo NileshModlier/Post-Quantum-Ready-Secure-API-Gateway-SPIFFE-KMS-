@@ -1,0 +1,31 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: quantum-gateway
+  namespace: quantum-gateway
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: quantum-gateway
+  template:
+    metadata:
+      labels:
+        app: quantum-gateway
+    spec:
+      serviceAccountName: quantum-gateway-sa
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+      - name: gateway
+        image: ghcr.io/your-org/quantum-gateway:latest
+        ports:
+        - containerPort: 8000
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop: ["ALL"]

@@ -1,0 +1,21 @@
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: quantum-gateway
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/your-org/quantum-aware-api-gateway.git
+    targetRevision: main
+    path: gitops/overlays/prod
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: quantum-gateway
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
